@@ -1,5 +1,6 @@
 package com.seerbit_assesement.code_challenge.transactions.services.impl;
 
+import com.seerbit_assesement.code_challenge.transactions.dto.TransactionRequest;
 import com.seerbit_assesement.code_challenge.transactions.model.Transaction;
 import com.seerbit_assesement.code_challenge.transactions.model.TransactionStatistics;
 import com.seerbit_assesement.code_challenge.transactions.services.TransactionService;
@@ -11,6 +12,8 @@ import java.math.RoundingMode;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
@@ -19,11 +22,11 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 public class TransactionServiceImpl implements TransactionService {
     private final Queue<Transaction> transactions = new ConcurrentLinkedDeque<>();
     @Override
-    public void addTransaction(String amount) {
+    public void addTransaction(TransactionRequest request) {
         //TODO create exceptions
         ZonedDateTime currentTimeStamp = ZonedDateTime.now(ZoneOffset.UTC);
         Transaction transaction = Transaction.builder()
-                        .amount(new BigDecimal(amount).setScale(2, RoundingMode.HALF_UP))
+                        .amount(new BigDecimal(request.getAmount()).setScale(2, RoundingMode.HALF_UP))
                                 .timeStamp(currentTimeStamp)
                                         .build();
 
@@ -42,7 +45,7 @@ public class TransactionServiceImpl implements TransactionService {
         long count = 0;
 
         for (Transaction transaction : transactions){
-            if (transaction.getTimeStamp().toInstant().toEpochMilli() > lastThirtySeconds){
+            if ( transaction.getTimeStamp().toInstant().toEpochMilli() > lastThirtySeconds){
                 BigDecimal amount = transaction.getAmount();
                 sum = sum.add(amount);
                 max = max.max(amount);
@@ -58,8 +61,13 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public void DeleteTransactions() {
+    public void deleteTransactions() {
         transactions.clear();
 
+    }
+
+    @Override
+    public List<Transaction> getAllTransaction() {
+        return new ArrayList<>(transactions);
     }
 }

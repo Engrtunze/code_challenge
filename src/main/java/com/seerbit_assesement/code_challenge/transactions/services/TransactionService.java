@@ -1,9 +1,14 @@
 package com.seerbit_assesement.code_challenge.transactions.services;
 
+import com.seerbit_assesement.code_challenge.transactions.dto.TransactionRequest;
+import com.seerbit_assesement.code_challenge.transactions.model.Transaction;
 import com.seerbit_assesement.code_challenge.transactions.model.TransactionStatistics;
 
+import java.util.List;
+
 public interface TransactionService {
-void addTransaction(String amount);
+void addTransaction(TransactionRequest request);
 TransactionStatistics getStatistics();
-void DeleteTransactions();
+void deleteTransactions();
+List<Transaction> getAllTransaction();
 }
