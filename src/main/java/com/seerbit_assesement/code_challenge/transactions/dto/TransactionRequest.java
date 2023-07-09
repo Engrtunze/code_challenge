@@ -7,4 +7,7 @@ import lombok.Data;
 public class TransactionRequest {
     @NotEmpty
     private String amount;
+    @NotEmpty
+    private String timeStamp;
+
 }

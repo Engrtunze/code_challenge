@@ -27,11 +27,11 @@ public class TransactionController {
         transactionService.addTransaction(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<Transaction>> getallTransaction(){
         return ResponseEntity.ok(transactionService.getAllTransaction());
     }
-    @GetMapping
+    @GetMapping("/statistics")
     public ResponseEntity<TransactionStatistics> getStatistics(){
         return ResponseEntity.ok(transactionService.getStatistics());
     }
