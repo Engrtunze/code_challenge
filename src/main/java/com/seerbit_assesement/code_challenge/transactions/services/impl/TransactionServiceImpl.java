@@ -74,8 +74,7 @@ public class TransactionServiceImpl implements TransactionService {
             ZonedDateTime thirtySecondsAgo = ZonedDateTime.now(ZoneOffset.UTC).minusSeconds(30);
 
             if (transactions.isEmpty() || transactions.peekFirst().getTimeStamp().isBefore(thirtySecondsAgo)) {
-                // No transactions within the last 30 seconds
-                return new TransactionStatistics(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, 0);
+                throw new NotFoundException("No transactions within the last 30 seconds");
             }
             BigDecimal avg = sum.get().divide(BigDecimal.valueOf(count.get()), 2, RoundingMode.HALF_UP);
             return new TransactionStatistics(sum.get(), max.get(), min.get(), avg, count.get());
