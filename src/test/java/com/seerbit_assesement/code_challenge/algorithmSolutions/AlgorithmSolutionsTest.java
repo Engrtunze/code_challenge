@@ -28,4 +28,14 @@ class AlgorithmSolutionsTest {
         int[] expected = {3, 5};
         assertArrayEquals(expected, result);
     }
+    @Test
+    void testNumberRangeKeyNotFound() {
+        int[] numbers = {1, 3, 5, 7, 9}; // Sorted array
+        int targetValue = 4; // Key value not present in the array
+
+        int[] result = AlgorithmSolutions.numberRange(numbers, targetValue);
+
+        int[] expected = {-1, -1};
+        Assertions.assertArrayEquals(expected, result);
+    }
 }
