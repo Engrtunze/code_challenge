@@ -6,6 +6,7 @@ import com.seerbit_assesement.code_challenge.transactions.model.TransactionStati
 import com.seerbit_assesement.code_challenge.transactions.services.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,16 +23,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TransactionController {
     private final TransactionService transactionService;
-    @PostMapping
+    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> addTransaction(@RequestBody @Validated TransactionRequest request){
         transactionService.addTransaction(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
-    @GetMapping
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Transaction>> getallTransaction(){
         return ResponseEntity.ok(transactionService.getAllTransaction());
     }
-    @GetMapping("/statistics")
+    @GetMapping(value = "/statistics", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TransactionStatistics> getStatistics(){
         return ResponseEntity.ok(transactionService.getStatistics());
     }
